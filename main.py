@@ -68,10 +68,11 @@ def get_url(url):
 
 def download_ebook(content):
     web_soup = bs4.BeautifulSoup(r.content)
-    title = web_soup.title.string.split(' |')[0]
+    title = web_soup.title.string.split(' |')[0] # Grab the title of the book
+    # If a slash is present in the title, remove it.
     if '/' in title:
         title = title.replace('/', "")
-        print(title)
+    # TODO Simplify the way of getting the url in one step
     ebook_section = web_soup.find('div', attrs={'class': 'cta-button-container__item'})
     ebook_url = f"{base_url}{ebook_section.find('a', href=True).get('href')}"
     book = requests.get(ebook_url)
